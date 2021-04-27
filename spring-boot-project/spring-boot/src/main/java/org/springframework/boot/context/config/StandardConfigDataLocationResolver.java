@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2020 the original author or authors.
+ * Copyright 2012-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package org.springframework.boot.context.config;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -212,7 +213,7 @@ public class StandardConfigDataLocationResolver
 			}
 		}
 		throw new IllegalStateException("File extension is not known to any PropertySourceLoader. "
-				+ "If the location is meant to reference a directory, it must end in '/'");
+				+ "If the location is meant to reference a directory, it must end in '/' or File.separator");
 	}
 
 	private String getLoadableFileExtension(PropertySourceLoader loader, String file) {
@@ -225,7 +226,7 @@ public class StandardConfigDataLocationResolver
 	}
 
 	private boolean isDirectory(String resourceLocation) {
-		return resourceLocation.endsWith("/");
+		return resourceLocation.endsWith("/") || resourceLocation.endsWith(File.separator);
 	}
 
 	private List<StandardConfigDataResource> resolve(Set<StandardConfigDataReference> references) {
